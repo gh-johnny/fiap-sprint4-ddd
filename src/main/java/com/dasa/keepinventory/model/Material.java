@@ -29,6 +29,9 @@ public class Material extends BaseEntity {
     }
 
     // getters & setters
+    public Long getId() { return super.getId(); }
+    public void setId(Long id) { super.setId(id); }
+
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 

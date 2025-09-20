@@ -1,8 +1,9 @@
 package com.dasa.keepinventory.model;
 
+import jakarta.persistence.Column;
 import java.time.LocalDateTime;
-import jakarta.persistence.*;
 import com.dasa.keepinventory.model.abstractions.BaseEntity;
+import jakarta.persistence.*;
 
 @Entity
 public class RegistroConsumo extends BaseEntity {
@@ -41,12 +42,17 @@ public class RegistroConsumo extends BaseEntity {
     this.responsavel = responsavel;
   }
 
+  @Override
   public Long getId() {
     return super.getId();
   }
 
   public Double getQuantidade() {
     return quantidade;
+  }
+
+  public void setQuantidade(Double quantidade) {
+    this.quantidade = quantidade;
   }
 
   public LocalDateTime getDtConsumo() {
@@ -59,6 +65,10 @@ public class RegistroConsumo extends BaseEntity {
 
   public Material getMaterial() {
     return material;
+  }
+
+  public void setMaterial(Material material) {
+    this.material = material;
   }
 
   public Unidade getUnidade() {

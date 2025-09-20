@@ -1,8 +1,8 @@
 package com.dasa.keepinventory.model;
 
 import java.time.LocalDateTime;
-import com.dasa.keepinventory.model.abstractions.BaseEntity;
 import jakarta.persistence.*;
+import com.dasa.keepinventory.model.abstractions.BaseEntity;
 
 @Entity
 public class MovimentacaoEstoque extends BaseEntity {
@@ -45,16 +45,32 @@ public class MovimentacaoEstoque extends BaseEntity {
     return tipoMovimentacao;
   }
 
+  public void setTipoMovimentacao(String tipoMovimentacao) {
+    this.tipoMovimentacao = tipoMovimentacao;
+  }
+
   public Double getQuantidade() {
     return quantidade;
+  }
+
+  public void setQuantidade(Double quantidade) {
+    this.quantidade = quantidade;
   }
 
   public LocalDateTime getDtMovimentacao() {
     return dtMovimentacao;
   }
 
+  public void setDtMovimentacao(LocalDateTime dtMovimentacao) {
+    this.dtMovimentacao = dtMovimentacao;
+  }
+
   public Material getMaterial() {
     return material;
+  }
+
+  public void setMaterial(Material material) {
+    this.material = material;
   }
 
   public Almoxarifado getAlmoxarifado() {

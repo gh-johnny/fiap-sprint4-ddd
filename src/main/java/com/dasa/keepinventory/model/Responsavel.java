@@ -1,8 +1,7 @@
 package com.dasa.keepinventory.model;
 
 import com.dasa.keepinventory.model.abstractions.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 @Entity
 public class Responsavel extends BaseEntity {
