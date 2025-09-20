@@ -9,21 +9,28 @@ KeepInventory é um sistema de gestão de estoque para controle de materiais em 
 - Java 17 (JDK)
 - Gradle 8.x
 - PostgreSQL
+- Docker
 ---
 
 ## Configuração do Banco de Dados
-1. Crie o banco no PostgreSQL:
+1. Rode o Docker Compose:
+```bash
+$ docker compose up -d
+```
+1.1 Crie o banco manualmente se precisar no PostgreSQL:
 ```sql
 CREATE DATABASE keepinventory;
 ```
-2. Atualize \`src/main/resources/application.properties\`:
+2. Atualize se necessário `src/main/resources/application.properties`:
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/keepinventory
+spring.datasource.url=jdbc:postgresql://localhost:5432/dasa_keepinventory
 spring.datasource.username=postgres
 spring.datasource.password=postgres
 spring.datasource.driver-class-name=org.postgresql.Driver
+
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
 
 ---
