@@ -4,6 +4,10 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.5'
 }
 
+group = 'com.dasa'
+version = '1.0.0'
+description = 'Sistema de gerenciamento de inventário hospitalar'
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
@@ -15,12 +19,21 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
+    // Spring Boot Starters
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'org.postgresql:postgresql:42.6.0'
-
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    // PostgreSQL
+    runtimeOnly 'org.postgresql:postgresql:42.7.3'
+    
+    // OpenAPI/Swagger Documentation
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+    
+    // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
