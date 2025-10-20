@@ -6,6 +6,7 @@ import com.dasa.keepinventory.api.mappers.MaterialResponseMapper;
 import com.dasa.keepinventory.api.mappers.ResultToApiResponseMapper;
 import com.dasa.keepinventory.application.cqs.commands.material.CriarMaterialCommand;
 import com.dasa.keepinventory.application.cqs.commands.material.DeletarMaterialCommand;
+import com.dasa.keepinventory.application.cqs.commands.material.AtualizarMaterialCommand;
 import com.dasa.keepinventory.application.cqs.handlers.material.*;
 import com.dasa.keepinventory.application.cqs.queries.material.ListarMateriaisCriticosQuery;
 import com.dasa.keepinventory.application.cqs.queries.material.ObterMaterialPorIdQuery;
@@ -15,6 +16,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.dasa.keepinventory.api.dto.request.CreateMaterialRequest;
+import com.dasa.keepinventory.api.dto.request.UpdateMaterialRequest;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,6 +29,7 @@ public class MaterialController {
     // Command Handlers
     private final CriarMaterialCommandHandler criarMaterialHandler;
     private final DeletarMaterialCommandHandler deletarMaterialHandler;
+    private final AtualizarMaterialCommandHandler atualizarMaterialCommandHandler;
     
     // Query Handlers
     private final ObterTodosMateriaisQueryHandler obterTodosHandler;
@@ -43,6 +46,7 @@ public class MaterialController {
             ObterTodosMateriaisQueryHandler obterTodosHandler,
             ObterMaterialPorIdQueryHandler obterPorIdHandler,
             ListarMateriaisCriticosQueryHandler listarCriticosHandler,
+            AtualizarMaterialCommandHandler atualizarMaterialCommandHandler,
             MaterialResponseMapper responseMapper,
             ResultToApiResponseMapper resultMapper) {
         this.criarMaterialHandler = criarMaterialHandler;
@@ -50,6 +54,7 @@ public class MaterialController {
         this.obterTodosHandler = obterTodosHandler;
         this.obterPorIdHandler = obterPorIdHandler;
         this.listarCriticosHandler = listarCriticosHandler;
+        this.atualizarMaterialCommandHandler = atualizarMaterialCommandHandler;
         this.responseMapper = responseMapper;
         this.resultMapper = resultMapper;
     }
@@ -72,6 +77,28 @@ public class MaterialController {
         return response.isSuccess() 
             ? ResponseEntity.status(HttpStatus.CREATED).body(response)
             : ResponseEntity.badRequest().body(response);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualizar material", description = "Atualiza os dados de um material existente")
+    public ResponseEntity<ApiResponse<MaterialResponse>> update(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateMaterialRequest request) {
+        
+        var command = new AtualizarMaterialCommand(
+            id,
+            request.getNome(),
+            request.getCategoria(),
+            request.getUnidadeMedida(),
+            request.getQuantidadeTotal()
+        );
+
+        var result = atualizarMaterialCommandHandler.handle(command);
+        var response = resultMapper.map(result.map(responseMapper::toResponse));
+
+        return response.isSuccess()
+            ? ResponseEntity.ok(response)
+            : ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @GetMapping
